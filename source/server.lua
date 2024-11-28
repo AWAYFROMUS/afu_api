@@ -45,7 +45,7 @@ function handlers.create(method, path, callback, options)
             print("[^3-^0] request to " .. path .. " was cancelled")
         end)
     end
-    print(("[^2+^0] handler created ^3%s^0 ^4%s^0"):format(method, path))
+    print(("[^2+^0] handler created ^3%s^0 ^2%s%s^0"):format(method, handlers.getEndpoint(),path))
 end
 
 ---@return string url api url ของ script นี้ eg. http://localhost:3000/afu_mailbox
@@ -56,8 +56,8 @@ end
 ---@return void - เริ่มต้น http server
 function handlers.run()
     SetHttpHandler(function(request, response)
-        if handlers[request.method] and handlers[request.method][request.path] then
-            handlers[request.method][request.path](request, response)
+        if handlers.core[request.method] and handlers.core[request.method][request.path] then
+            handlers.core[request.method][request.path](request, response)
         else
             response.writeHead(404, { ['Content-Type'] = 'application/json' })
             response.send(json.encode({
