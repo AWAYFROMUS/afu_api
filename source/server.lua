@@ -24,6 +24,16 @@ local handlers = {
 ---@return void
 function handlers.create(method, path, callback, options)
     handlers.core[method][path] = function(request, response)
+
+        local oldSend = response.send
+        response.send = function(data)
+            if type(data) == "table" or type(data) == "function" then
+                Logger.error("response.send only accept string, buffer or bytes")
+                return
+            end
+            oldSend(data)
+        end
+
         request.setDataHandler(function(data)
             request.body = data
             request.data = json.decode(data)
