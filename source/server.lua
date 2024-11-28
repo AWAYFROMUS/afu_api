@@ -29,6 +29,11 @@ function handlers.create(method, path, callback, options)
         response.send = function(data)
             if type(data) == "table" or type(data) == "function" then
                 Logger.error("response.send only accept string, buffer or bytes")
+                response.writeHead(500, { ['Content-Type'] = 'application/json' })
+                response.send(json.encode({
+                    status = 500,
+                    msg = "internal server error response.send only accept string, buffer or bytes"
+                }))
                 return
             end
             oldSend(data)
