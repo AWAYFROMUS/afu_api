@@ -38,7 +38,6 @@ function handlers.create(method, path, callback, options)
             end
             oldSend(data)
         end
-
         request.setDataHandler(function(data)
             request.body = data
             request.data = json.decode(data)
@@ -55,9 +54,8 @@ function handlers.create(method, path, callback, options)
             end
            callback(request, response)
         end
-       
         request.setCancelHandler(function()
-            print("[^3-^0] request to " .. path .. " was cancelled")
+            -- print("[^3-^0] request to " .. path .. " was cancelled")
         end)
     end
     print(("[^2+^0] handler created ^3%s^0 ^2%s%s^0"):format(method, handlers.getEndpoint(),path))
