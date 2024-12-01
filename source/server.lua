@@ -7,6 +7,10 @@
     
 ]]
 
+local internal = {
+
+}
+
 local handlers = {
     ready = promise.new(),
     core = {
@@ -17,12 +21,41 @@ local handlers = {
     }
 }
 
+---@param path string /path
+---@param callback function (request: Request, response: Response)
+---@param options table {requireBody: boolean}
+function handlers.GET(path, callback, options)
+    internal.create("GET", path, callback, options)
+end
+
+---@param path string /path
+---@param callback function (request: Request, response: Response)
+---@param options table {requireBody: boolean}
+function handlers.POST(path, callback, options)
+    internal.create("POST", path, callback, options)
+end
+
+---@param path string /path
+---@param callback function (request: Request, response: Response)
+---@param options table {requireBody: boolean}
+function handlers.PUT(path, callback, options)
+    internal.create("PUT", path, callback, options)
+end
+
+---@param path string /path
+---@param callback function (request: Request, response: Response)
+---@param options table {requireBody: boolean}
+function handlers.DELETE(path, callback, options)
+    internal.create("DELETE", path, callback, options)
+end
+
+
 ---@param method string "GET" | "POST" | "PUT" | "DELETE"
 ---@param path string /path 
 ---@param callback function (request: Request, response: Response) 
 ---@param options table {requireBody: boolean}
 ---@return void
-function handlers.create(method, path, callback, options)
+function internal.create(method, path, callback, options)
     handlers.core[method][path] = function(request, response)
 
         local oldSend = response.send
