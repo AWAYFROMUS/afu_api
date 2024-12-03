@@ -1,6 +1,6 @@
 ### Example Usage
 ```lua
-api = exports["afu_api_framework"]:init()
+api = exports["afu_api"]:init()
 api.GET("/hello", function(request, response)
     response.writeHead(200, { ['Content-Type'] = 'application/json' })
     response.send(json.encode({
